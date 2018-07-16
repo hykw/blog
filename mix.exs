@@ -46,7 +46,8 @@ defmodule Blog.Mixfile do
       {:entropy_string, "~> 1.3"},
       {:sage, "~> 0.4.0"},
       {:con_cache, "~> 0.13.0"},
-      {:jason, "~> 1.1"}
+      {:jason, "~> 1.1"},
+      {:swoosh, "~> 0.15.0"}
     ]
   end
 
