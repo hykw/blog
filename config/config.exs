@@ -7,20 +7,19 @@ use Mix.Config
 
 config :ecto, json_library: Jason
 
-config :phoenix, :format_encoders,
-  json: Jason
+config :phoenix, :format_encoders, json: Jason
 
 # General application configuration
 config :blog,
-  ecto_repos: [Blog.Repo]
+  ecto_repos: [Blog.Repo],
+  salt: System.get_env("TOKEN_SALT") || ""
 
 # Configures the endpoint
 config :blog, BlogWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "i9iwtQPyX0Q4AhzKkWTYrRQpp7evTxkz+XZXMGE0/dceR+ohJnqLNNLK1FvFCCr9",
   render_errors: [view: BlogWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Blog.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Blog.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -29,4 +28,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

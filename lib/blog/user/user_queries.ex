@@ -1,5 +1,5 @@
 defmodule Blog.User.UserQueries do
-  use Blog, :queries
+  use Blog, :query
 
   alias Blog.User
 

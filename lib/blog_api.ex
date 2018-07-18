@@ -5,9 +5,19 @@ defmodule BlogAPI do
       use Absinthe.Relay.Schema.Notation, :modern
 
       import Absinthe.Resolution.Helpers
+      import BlogAPI.Helpers
 
       alias Absinthe.Relay.Connection
       alias Absinthe.Relay.Node.ParseIDs
+      alias Blog.Repo
+    end
+  end
+
+  def middleware do
+    quote do
+      @behaviour Absinthe.Middleware
+
+      alias Absinthe.Resolution
     end
   end
 

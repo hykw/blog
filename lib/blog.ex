@@ -28,7 +28,7 @@ defmodule Blog do
     end
   end
 
-  def queries do
+  def query do
     quote do
       import Ecto.Query, only: [from: 2]
     end
@@ -36,5 +36,9 @@ defmodule Blog do
 
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+
+  def config(key) do
+    Application.get_env(:blog, key)
   end
 end

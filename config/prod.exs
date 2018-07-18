@@ -59,8 +59,7 @@ config :logger, level: :info
 #     config :blog, BlogWeb.Endpoint, server: true
 #
 
-config :blog, BlogWeb.Endpoint,
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
+config :blog, BlogWeb.Endpoint, secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Configure your database
 config :blog, Blog.Repo,

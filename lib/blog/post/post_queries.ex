@@ -1,5 +1,5 @@
 defmodule Blog.Post.PostQueries do
-  use Blog, :queries
+  use Blog, :query
 
   alias Blog.Post
 
