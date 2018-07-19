@@ -111,8 +111,8 @@ defmodule BlogAPI.Schema.PostTypes do
         field :post, :post
       end
 
-      resolve fn params, %{context: %{user: user}} ->
-        params = Map.put(params, :user_id, user.id)
+      resolve fn args, %{context: %{user: user}} ->
+        params = Map.put(args, :user_id, user.id)
 
         with {:ok, post} <- CreatePost.call(params) do
           {:ok, %{post: post}}
