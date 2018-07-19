@@ -6,7 +6,7 @@ defmodule Blog.User.ActivateUser do
   @doc """
   Activates an User
   """
-  @spec call(user :: Blog.User.t()) :: {:ok, Blog.Usert.t()} | {:error, Ecto.Changeset.t()}
+  @spec call(user :: Blog.User.t()) :: {:ok, Blog.User.t()} | {:error, Ecto.Changeset.t()}
   def call(user) do
     new()
     |> run(:user, &activate_user/2)
@@ -21,7 +21,7 @@ defmodule Blog.User.ActivateUser do
   Update User and set active to true
   """
   @spec activate_user(effects :: map, user :: Blog.User.t()) ::
-          {:ok, Blog.Usert.t()} | {:error, Ecto.Changeset.t()}
+          {:ok, Blog.User.t()} | {:error, Ecto.Changeset.t()}
   def activate_user(_effects, %User{} = user) do
     user
     |> User.changeset(%{active: true})

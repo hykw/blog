@@ -9,7 +9,8 @@ defmodule BlogAPI do
 
       alias Absinthe.Relay.Connection
       alias Absinthe.Relay.Node.ParseIDs
-      alias Blog.Repo
+      alias Blog.{Repo, Query}
+      alias BlogAPI.HandleToken
     end
   end
 

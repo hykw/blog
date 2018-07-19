@@ -1,26 +1,15 @@
 defmodule Blog.User.UserQueries do
   use Blog, :query
 
-  alias Blog.User
+  alias Blog.Post
 
   @doc """
-  Find an active User by email
+  Find Posts by User
   """
-  @spec user_by_email(email :: String.t()) :: Ecto.Queryable.t()
-  def user_by_email(email) do
-    email = String.downcase(email)
-
-    from user in User,
-      where: user.email == ^email,
-      limit: 1
-  end
-
-  @doc """
-  Filter queryable by active state
-  """
-  @spec filter_active(queryable :: Ecto.Queryable.t(), active :: boolean) :: Ecto.Queryable.t()
-  def filter_active(queryable, active) do
-    from user in queryable,
-      where: user.active == ^active
+  @spec posts_by_user(user_id :: binary) :: Ecto.Queryable.t()
+  def posts_by_user(user_id) do
+    from post in Post,
+      where: post.user_id == ^user_id,
+      order_by: [asc: :inserted_at]
   end
 end

@@ -12,4 +12,14 @@ defmodule Blog.Post.PostQueries do
       where: post.user_id == ^user_id and post.handle == ^handle,
       limit: 1
   end
+
+  @doc """
+  Find post by user
+  """
+  @spec posts_by_user(user_id :: binary) :: Ecto.Queryable.t()
+  def posts_by_user(user_id) do
+    from post in Post,
+      where: post.user_id == ^user_id,
+      order_by: [asc: :inserted_at]
+  end
 end

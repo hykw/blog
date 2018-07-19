@@ -4,9 +4,9 @@ defmodule Blog.User.UserEmail do
   def register(user) do
     new()
     |> to({user.name, user.email})
-    |> from({"Dr B Banner", "hulk.smash@example.com"})
-    |> subject("Hello, Avengers!")
-    |> html_body("<h1>Hello #{user.name}</h1>")
-    |> text_body("Hello #{user.name}\n")
+    |> from({"Blog", "noreply@blog.test"})
+    |> subject("Access token")
+    |> html_body("<h1>Hello #{user.name}</h1><p>Your access token is: #{user.access_token} </p>")
+    |> text_body("Hello #{user.name}\n\nYour access token is: #{user.access_token}")
   end
 end

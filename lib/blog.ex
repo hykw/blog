@@ -5,6 +5,8 @@ defmodule Blog do
 
       import Ecto.Changeset
 
+      alias Blog.Repo
+
       @type t :: %__MODULE__{}
 
       @primary_key {:id, :binary_id, autogenerate: true}

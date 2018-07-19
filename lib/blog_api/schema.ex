@@ -5,8 +5,12 @@ defmodule BlogAPI.Schema do
   alias Absinthe.Relay.Node.ParseIDs
   alias BlogAPI.{HandleToken, HandleErrors}
 
-  @unprotected_types [
-    :register_user_payload
+  @unprotected_identifiers [
+    :register_user,
+    :login_user,
+    :activate_user,
+    :post_by_handle,
+    :posts_by_access_token
   ]
 
   @node_id_rules [
@@ -14,16 +18,20 @@ defmodule BlogAPI.Schema do
     post_id: :post
   ]
 
+  import_types Absinthe.Type.Custom
   import_types BlogAPI.Schema.NodeTypes
   import_types BlogAPI.Schema.UserTypes
+  import_types BlogAPI.Schema.PostTypes
 
   query do
     import_fields :node_queries
     import_fields :user_queries
+    import_fields :post_queries
   end
 
   mutation do
     import_fields :user_mutations
+    import_fields :post_mutations
   end
 
   @doc """
@@ -43,8 +51,8 @@ defmodule BlogAPI.Schema do
   @doc """
   Middleware for unprotected queries and mutations
   """
-  def middleware(middleware, %{type: type}, %{identifier: identifier})
-      when identifier in [:query, :mutation] and type in @unprotected_types do
+  def middleware(middleware, %{identifier: field_identifier}, %{identifier: identifier})
+      when identifier in [:query, :mutation] and field_identifier in @unprotected_identifiers do
     [{ParseIDs, @node_id_rules}] ++ middleware ++ [HandleErrors]
   end
 

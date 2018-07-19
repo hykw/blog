@@ -8,9 +8,11 @@ defmodule Blog.Repo.Migrations.CreateUsers do
       add(:email, :string)
       add(:hashed_password, :string)
       add(:active, :boolean)
+      add(:access_token, :string)
       timestamps()
     end
 
     create(unique_index(:users, [:email]))
+    create(unique_index(:users, [:access_token]))
   end
 end

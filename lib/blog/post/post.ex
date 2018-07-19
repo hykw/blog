@@ -19,17 +19,8 @@ defmodule Blog.Post do
   def changeset(struct, params) do
     struct
     |> cast(params, @required ++ @optional)
-    |> put_handle_change()
     |> validate_required(@required)
+    |> unsafe_validate_unique([:user_id, :handle], Repo)
+    |> unique_constraint(:handle, name: :posts_user_id_handle_index)
   end
-
-  @spec put_handle_change(changeset :: Ecto.Changeset.t()) :: Ecto.Changeset.t()
-  defp put_handle_change(%{valid?: true} = changeset) do
-    case get_field(changeset, :handle) do
-      nil -> put_change(changeset, :handle, EntropyString.large())
-      _handle -> changeset
-    end
-  end
-
-  defp put_handle_change(changeset), do: changeset
 end

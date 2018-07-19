@@ -1,12 +1,8 @@
 defmodule Blog.User do
   use Blog, :schema
 
-  alias Blog.Authentication
-
-  @required [:email, :hashed_password]
-  @optional [:password, :name]
-
-  @register_required [:name, :email, :password, :hashed_password]
+  @required [:email, :hashed_password, :access_token]
+  @optional [:password, :name, :active]
 
   schema "users" do
     field :name, :string
@@ -14,6 +10,7 @@ defmodule Blog.User do
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :active, :boolean, default: false
+    field :access_token, :string
 
     has_many :posts, Blog.Post
 
@@ -24,25 +21,8 @@ defmodule Blog.User do
   def changeset(struct, params) do
     struct
     |> cast(params, @required ++ @optional)
-    |> put_hashed_password_change()
     |> validate_required(@required)
+    |> unsafe_validate_unique([:email], Repo)
+    |> unique_constraint(:email)
   end
-
-  @spec register_changeset(struct :: struct, params :: map) :: Ecto.Changeset.t()
-  def register_changeset(struct, params) do
-    struct
-    |> cast(params, @register_required)
-    |> put_hashed_password_change()
-    |> validate_required(@register_required)
-  end
-
-  @spec put_hashed_password_change(changeset :: Ecto.Changeset.t()) :: Ecto.Changeset.t()
-  defp put_hashed_password_change(%{valid?: true} = changeset) do
-    case get_change(changeset, :password) do
-      nil -> changeset
-      password -> put_change(changeset, :hashed_password, Authentication.hash_password(password))
-    end
-  end
-
-  defp put_hashed_password_change(changeset), do: changeset
 end

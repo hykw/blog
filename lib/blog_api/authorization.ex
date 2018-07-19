@@ -18,7 +18,7 @@ defimpl Blog.Authorization, for: Blog.User do
   User can read, update, and delete a Resource from the same Post
   """
   def can?(%User{id: user_id}, action, %Post{user_id: user_id})
-      when action in [:create, :read, :update, :delete],
+      when action in [:read, :update, :delete],
       do: :ok
 
   @doc """
